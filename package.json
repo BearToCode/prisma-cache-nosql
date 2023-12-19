@@ -1,72 +1,75 @@
 {
-  "name": "prisma-cache-nosql",
-  "version": "0.0.0-development",
-  "description": "",
-  "type": "module",
-  "main": "./dist/src/index.js",
-  "scripts": {
-    "test:generate-client": "prisma generate --schema ./tests/prisma/schema.prisma",
-    "test:push-schema": "prisma db push --schema ./tests/prisma/schema.prisma",
-    "build": "tsc -p tsconfig.build.json",
-    "test": "vitest",
-    "lint": "prettier --check . && eslint .",
-    "format": "prettier --write .",
-    "postinstall": "husky install",
-    "commit": "git-cz",
-    "publish": "npx semantic-release",
-    "semantic-release": "semantic-release"
-  },
-  "exports": {
-    ".": {
-      "import": "./dist/src/index.js",
-      "require": "./dist/src/index.js"
-    }
-  },
-  "files": [
-    "dist"
-  ],
-  "author": "BearToCode",
-  "license": "ISC",
-  "peerDependencies": {
-    "prisma": "^5.7.0"
-  },
-  "optionalDependencies": {
-    "acebase": "^1.29.5"
-  },
-  "devDependencies": {
-    "@prisma/client": "^5.7.0",
-    "@types/node": "^20.10.4",
-    "@types/object-hash": "^3.0.6",
-    "@typescript-eslint/eslint-plugin": "^6.14.0",
-    "@typescript-eslint/parser": "^6.14.0",
-    "acebase": "^1.29.5",
-    "cz-conventional-changelog": "^3.3.0",
-    "eslint": "^8.56.0",
-    "husky": "^8.0.3",
-    "lint-staged": "^15.2.0",
-    "prettier": "^3.1.1",
-    "prisma": "^5.7.0",
-    "semantic-release": "^22.0.12",
-    "typescript": "^5.3.3",
-    "vitest": "^1.0.4"
-  },
-  "dependencies": {
-    "chalk": "^5.3.0",
-    "object-hash": "^3.0.0"
-  },
-  "lint-staged": {
-    "**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "prettier --write"
-    ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/BearToCode/prisma-cache-nosql.git"
-  }
+	"name": "prisma-cache-nosql",
+	"version": "0.0.0-development",
+	"description": "",
+	"type": "module",
+	"main": "./dist/src/index.js",
+	"scripts": {
+		"test:generate-client": "prisma generate --schema ./tests/prisma/schema.prisma",
+		"test:push-schema": "prisma db push --schema ./tests/prisma/schema.prisma",
+		"build": "tsc -p tsconfig.build.json",
+		"test": "vitest",
+		"lint": "prettier --check . && eslint .",
+		"format": "prettier --write .",
+		"postinstall": "husky install",
+		"commit": "git-cz",
+		"publish": "npx semantic-release",
+		"semantic-release": "semantic-release"
+	},
+	"exports": {
+		".": {
+			"import": "./dist/src/index.js",
+			"require": "./dist/src/index.js"
+		}
+	},
+	"files": [
+		"dist"
+	],
+	"author": "BearToCode",
+	"license": "ISC",
+	"peerDependencies": {
+		"prisma": "^5.7.0"
+	},
+	"optionalDependencies": {
+		"acebase": "^1.29.5"
+	},
+	"devDependencies": {
+		"@prisma/client": "^5.7.0",
+		"@types/node": "^20.10.4",
+		"@types/object-hash": "^3.0.6",
+		"@typescript-eslint/eslint-plugin": "^6.14.0",
+		"@typescript-eslint/parser": "^6.14.0",
+		"acebase": "^1.29.5",
+		"cz-conventional-changelog": "^3.3.0",
+		"eslint": "^8.56.0",
+		"husky": "^8.0.3",
+		"lint-staged": "^15.2.0",
+		"prettier": "^3.1.1",
+		"prisma": "^5.7.0",
+		"semantic-release": "^22.0.12",
+		"typescript": "^5.3.3",
+		"vitest": "^1.0.4"
+	},
+	"dependencies": {
+		"chalk": "^5.3.0",
+		"object-hash": "^3.0.0"
+	},
+	"lint-staged": {
+		"**/*.{js,jsx,ts,tsx}": [
+			"eslint --fix",
+			"prettier --write"
+		],
+		"**/*.{json,css,md}": [
+			"prettier --write"
+		]
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/BearToCode/prisma-cache-nosql.git"
+	}
 }
