@@ -10,7 +10,9 @@
 		"build": "tsc -p tsconfig.build.json",
 		"test": "vitest",
 		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"format": "prettier --write .",
+		"postinstall": "husky install",
+		"commit": "git-cz"
 	},
 	"author": "BearToCode",
 	"license": "ISC",
@@ -27,7 +29,10 @@
 		"@typescript-eslint/eslint-plugin": "^6.14.0",
 		"@typescript-eslint/parser": "^6.14.0",
 		"acebase": "^1.29.5",
+		"cz-conventional-changelog": "^3.3.0",
 		"eslint": "^8.56.0",
+		"husky": "^8.0.3",
+		"lint-staged": "^15.2.0",
 		"prettier": "^3.1.1",
 		"prisma": "^5.7.0",
 		"typescript": "^5.3.3",
@@ -36,5 +41,16 @@
 	"dependencies": {
 		"chalk": "^5.3.0",
 		"object-hash": "^3.0.0"
+	},
+	"lint-staged": {
+		"**/*.{js,jsx,ts,tsx}": [
+			"eslint --fix",
+			"prettier --write"
+		]
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
 	}
 }
