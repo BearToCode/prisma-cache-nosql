@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
-import { Adapter, CacheMetadata } from './storage';
+import { Adapter } from './storage';
 import { LogLevel } from './utils/logger';
 
 /**
@@ -66,19 +66,11 @@ export type ArgsWithCache<Type, Operation extends SupportedOperation> = Prisma.A
 > &
 	Partial<CacheQueryArgs>;
 
-export type ResultWithCache<
-	Type,
-	Operation extends SupportedOperation,
-	Args extends ArgsWithCache<Type, Operation>
-> = Args extends { cache: { get: CacheConfig['get'] } }
-	? { result: Prisma.Result<Type, Args, Operation> } & Partial<CacheMetadata>
-	: Prisma.Result<Type, Args, Operation>;
-
 export type ClientMethodWithCache<
 	Type,
 	Operation extends SupportedOperation,
 	Args extends ArgsWithCache<Type, Operation>
-> = (this: Type, args?: Args) => Promise<ResultWithCache<Type, Operation, Args>>;
+> = (this: Type, args?: Args) => Promise<Prisma.Result<Type, Operation, Args>>;
 
 /**
  * Supported operations for caching.

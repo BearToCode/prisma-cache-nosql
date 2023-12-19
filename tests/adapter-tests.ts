@@ -3,26 +3,6 @@ import { Adapter } from '@/storage';
 import { PrismaClient } from '@prisma/client';
 import { beforeEach, describe, expect, test } from 'vitest';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function expectToHaveCache(data: any) {
-	expect(data).toHaveProperty('_cache');
-	expect(data).toHaveProperty('result');
-	expect(data._cache).toHaveProperty('cached_at');
-	expect(data._cache).toHaveProperty('expires_at');
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function expectNotToHaveCache(data: any) {
-	expect(data).not.toHaveProperty('_cache');
-}
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function expectToEqualWithCache(withoutCache: any, withCache: any) {
-	expectNotToHaveCache(withoutCache);
-	expectToHaveCache(withCache);
-	expect(withoutCache).toEqual(withCache.result);
-}
-
 export async function testAdapter(adapter: Adapter) {
 	const prisma = new PrismaClient().$extends(cache({ adapter, logLevel: 'log' }));
 
@@ -215,7 +195,7 @@ export async function testAdapter(adapter: Adapter) {
 					get: true
 				}
 			});
-			expectToEqualWithCache(firstResult, secondResult);
+			expect(firstResult).toEqual(secondResult);
 		});
 
 		test('find-unique-null', async () => {
@@ -236,7 +216,7 @@ export async function testAdapter(adapter: Adapter) {
 				}
 			});
 			expect(firstResult).toEqual(null);
-			expect(secondResult.result).toEqual(null);
+			expect(secondResult).toEqual(null);
 		});
 
 		test('find-first', async () => {
@@ -261,7 +241,7 @@ export async function testAdapter(adapter: Adapter) {
 					get: true
 				}
 			});
-			expectToEqualWithCache(firstResult, secondResult);
+			expect(firstResult).toEqual(secondResult);
 		});
 
 		test('find-first-null', async () => {
@@ -282,7 +262,7 @@ export async function testAdapter(adapter: Adapter) {
 				}
 			});
 			expect(firstResult).toEqual(null);
-			expect(secondResult.result).toEqual(null);
+			expect(secondResult).toEqual(null);
 		});
 
 		test('find-many', async () => {
@@ -307,7 +287,7 @@ export async function testAdapter(adapter: Adapter) {
 					get: true
 				}
 			});
-			expectToEqualWithCache(firstResult, secondResult);
+			expect(firstResult).toEqual(secondResult);
 		});
 
 		test('find-many-null', async () => {
@@ -328,7 +308,7 @@ export async function testAdapter(adapter: Adapter) {
 				}
 			});
 			expect(firstResult).toEqual([]);
-			expect(secondResult.result).toEqual([]);
+			expect(secondResult).toEqual([]);
 		});
 
 		test('count', async () => {
@@ -347,7 +327,7 @@ export async function testAdapter(adapter: Adapter) {
 					get: true
 				}
 			});
-			expectToEqualWithCache(firstResult, secondResult);
+			expect(firstResult).toEqual(secondResult);
 		});
 
 		test('aggregate', async () => {
@@ -373,7 +353,7 @@ export async function testAdapter(adapter: Adapter) {
 					get: true
 				}
 			});
-			expectToEqualWithCache(firstResult, secondResult);
+			expect(firstResult).toEqual(secondResult);
 		});
 
 		test('group-by', async () => {
@@ -401,7 +381,7 @@ export async function testAdapter(adapter: Adapter) {
 					get: true
 				}
 			});
-			expectToEqualWithCache(firstResult, secondResult);
+			expect(firstResult).toEqual(secondResult);
 		});
 	});
 
@@ -431,7 +411,7 @@ export async function testAdapter(adapter: Adapter) {
 					get: true
 				}
 			});
-			expectToEqualWithCache(firstResult, secondResult);
+			expect(firstResult).toEqual(secondResult);
 		});
 
 		test('ttl expired', async () => {
@@ -460,7 +440,7 @@ export async function testAdapter(adapter: Adapter) {
 					get: true
 				}
 			});
-			expect(secondResult.result).toEqual(null);
+			expect(secondResult).toEqual(null);
 		});
 
 		test('age valid', async () => {
@@ -488,7 +468,7 @@ export async function testAdapter(adapter: Adapter) {
 					}
 				}
 			});
-			expectToEqualWithCache(firstResult, secondResult);
+			expect(firstResult).toEqual(secondResult);
 		});
 
 		test('age expired', async () => {
@@ -517,7 +497,7 @@ export async function testAdapter(adapter: Adapter) {
 					}
 				}
 			});
-			expect(secondResult.result).toEqual(null);
+			expect(secondResult).toEqual(null);
 		});
 	});
 }

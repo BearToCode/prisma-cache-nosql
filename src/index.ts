@@ -48,7 +48,7 @@ export function cache(opts: CacheOptions) {
 		): ClientMethodWithCache<Type, Operation, Args> => {
 			return async function (this: Type, args?: Args) {
 				type BaseResult = Prisma.Result<Type, Args, Operation>;
-				type CachedResult = BaseResult & CacheMetadata;
+				type CachedResult = { result: BaseResult } & CacheMetadata;
 
 				const context = Prisma.getExtensionContext(this);
 				const model = context.$name;
@@ -79,7 +79,7 @@ export function cache(opts: CacheOptions) {
 							`Found cached value with age ${cached._cache.cached_at.toFixed(0)}ms: `,
 							cached
 						);
-						return cached as CachedResult;
+						return cached.result;
 					}
 				}
 
@@ -93,14 +93,8 @@ export function cache(opts: CacheOptions) {
 					await db.set({ model, operation, args }, pack);
 				}
 
-				if (cacheConfig.get) {
-					return {
-						result: base
-					};
-				}
-
-				return base as BaseResult;
-			} as ClientMethodWithCache<Type, Operation, Args>;
+				return base;
+			};
 		};
 
 		return client.$extends({
