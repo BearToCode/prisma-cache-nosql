@@ -9,7 +9,7 @@
 		"test:push-schema": "prisma db push --schema ./tests/prisma/schema.prisma",
 		"build": "tsc -p tsconfig.build.json",
 		"test": "vitest",
-		"lint": "prettier --write . && eslint .",
+		"lint": "prettier --check . && eslint .",
 		"format": "prettier --write .",
 		"postinstall": "husky install",
 		"commit": "git-cz"
@@ -20,7 +20,9 @@
 			"require": "./dist/src/index.js"
 		}
 	},
-	"files": ["dist"],
+	"files": [
+		"dist"
+	],
 	"author": "BearToCode",
 	"license": "ISC",
 	"peerDependencies": {

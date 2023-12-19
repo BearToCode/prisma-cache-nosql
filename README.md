@@ -2,7 +2,7 @@
 
 A Prisma extension to store queries results in a temporary NoSQL cache. Currently supported storage options are standard memory and [AceBase](https://github.com/appy-one/acebase).
 
-## 	Getting Started
+## Getting Started
 
 ### Installation
 
@@ -139,7 +139,6 @@ The following methods can be used with cache:
 - `logLevel`: determines the messages logged. Can be `log`, `warn`, `error`.
 - `default`: default cache configuration.
 - `models`: models specific cache configuration.
-
 
 ## Development
 
