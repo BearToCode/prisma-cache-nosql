@@ -1,5 +1,28 @@
 # `prisma-cache-nosql`
 
+<div>
+	<a href="https://www.npmjs.com/package/prisma-cache-nosql">
+		<img alt="npm" src="https://img.shields.io/npm/v/prisma-cache-nosql?logo=npm&logoColor=white">
+	</a>
+	<a href="https://github.com/BearToCode/prisma-cache-nosql/blob/master/LICENSE">
+		<img alt="GitHub License" src="https://img.shields.io/github/license/BearToCode/prisma-cache-nosql?label=📝%20license">
+	</a>
+	<a href="https://github.com/BearToCode/prisma-cache-nosql/actions/">
+		<img alt="GitHub Workflow Status (with event)" src="https://img.shields.io/github/actions/workflow/status/BearToCode/prisma-cache-nosql/run-tests.yaml?label=tests&logo=github">
+	</a>
+	<a href="https://prettier.io/">
+		<img alt="Uses prettier" src="https://img.shields.io/badge/code_style-prettier-ce00ff">
+	</a>
+	<a href="https://github.com/commitizen/cz-cli">
+		<img alt="Uses commitizen" src="https://img.shields.io/badge/🎇-commitizen-f71ef3">
+	</a>
+		<a href="https://github.com/commitizen/cz-cli">
+		<img alt="Uses semantic release" src="https://img.shields.io/badge/📦🚀-semantic_release-ff008e">
+	</a>
+</div>
+
+<br>
+
 A Prisma extension to store queries results in a temporary NoSQL cache. Currently supported storage options are standard memory and [AceBase](https://github.com/appy-one/acebase).
 
 ## Getting Started
