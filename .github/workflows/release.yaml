@@ -39,8 +39,8 @@ jobs:
       - name: Build
         run: npm run build
 
-      - name: Relase
-        run: npm run release
+      - name: Release
+        run: npm run publish
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
