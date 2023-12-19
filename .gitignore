@@ -11,3 +11,5 @@ test_db.*
 **/dist
 **/tsconfig.tsbuildinfo
 **/.rollup.cache
+
+*.db
