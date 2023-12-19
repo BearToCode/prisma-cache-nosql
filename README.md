@@ -5,7 +5,7 @@
 		<img alt="npm" src="https://img.shields.io/npm/v/prisma-cache-nosql?logo=npm&logoColor=white">
 	</a>
 	<a href="https://github.com/BearToCode/prisma-cache-nosql/blob/master/LICENSE">
-		<img alt="GitHub License" src="https://img.shields.io/github/license/BearToCode/prisma-cache-nosql?label=📝%20license">
+		<img alt="GitHub License" src="https://img.shields.io/github/license/BearToCode/prisma-cache-nosql?label=license">
 	</a>
 	<a href="https://github.com/BearToCode/prisma-cache-nosql/actions/">
 		<img alt="GitHub Workflow Status (with event)" src="https://img.shields.io/github/actions/workflow/status/BearToCode/prisma-cache-nosql/run-tests.yaml?label=tests&logo=github">
