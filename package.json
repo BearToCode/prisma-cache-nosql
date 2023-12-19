@@ -71,5 +71,11 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/BearToCode/prisma-cache-nosql.git"
-	}
+	},
+	"keywords": [
+		"prisma",
+		"cache",
+		"nosql",
+		"acebase"
+	]
 }
