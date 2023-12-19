@@ -1,0 +1,13 @@
+.DS_Store
+node_modules
+/build
+/.svelte-kit
+/package
+!.env.example
+.eslintcache
+.pnpm-debug.log
+test_db.*
+
+**/dist
+**/tsconfig.tsbuildinfo
+**/.rollup.cache
