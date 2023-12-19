@@ -6,7 +6,8 @@ permissions:
   contents: read
 
 jobs:
-  verify:
+  code-quality:
+    name: Code Quality Checks
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
