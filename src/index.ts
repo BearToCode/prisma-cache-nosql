@@ -161,3 +161,6 @@ export function cache(opts: CacheOptions) {
 		});
 	});
 }
+
+export * from './types';
+export * from './storage';

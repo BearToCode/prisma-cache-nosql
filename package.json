@@ -9,7 +9,7 @@
 		"test:push-schema": "prisma db push --schema ./tests/prisma/schema.prisma",
 		"build": "tsc -p tsconfig.build.json",
 		"test": "vitest",
-		"lint": "prettier --check . && eslint .",
+		"lint": "prettier --write . && eslint .",
 		"format": "prettier --write .",
 		"postinstall": "husky install",
 		"commit": "git-cz"

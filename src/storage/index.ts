@@ -22,3 +22,6 @@ export interface Database {
 	clear(model: string): Promise<void>;
 	clearAll(): Promise<void>;
 }
+
+export * from './acebase';
+export * from './memory';

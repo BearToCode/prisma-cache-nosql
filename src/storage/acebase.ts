@@ -1,6 +1,6 @@
 import type { AceBase } from 'acebase';
+import type { Adapter } from '.';
 import hash from 'object-hash';
-import { Adapter } from '.';
 
 export function adapterAceBase(acebase: AceBase): Adapter {
 	return ({ logger }) => ({
