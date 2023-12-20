@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"checkJs": false,
+		"checkJs": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"moduleResolution": "Bundler",
@@ -8,7 +8,6 @@
 		"skipLibCheck": true,
 		"sourceMap": true,
 		"strict": true,
-		"composite": true,
 		"outDir": "./dist",
 		"rootDir": ".",
 		"module": "ES2022",
@@ -19,5 +18,5 @@
 			"@": ["./src"]
 		}
 	},
-	"include": ["./src/**/*", "./tests/**/*"]
+	"include": ["./src", "./tests"]
 }
