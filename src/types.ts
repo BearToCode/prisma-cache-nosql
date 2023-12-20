@@ -62,8 +62,8 @@ export const DefaultCacheConfig: CacheConfig = {
 
 export type ClientMethodWithCache<Type, Operation extends SupportedOperation, Args> = (
 	this: Type,
-	args?: Prisma.Exact<Args, Prisma.Args<Type, Operation> & CacheQueryArgs>
-) => Promise<Prisma.Result<Type, Args, Operation>>;
+	args?: Prisma.Exact<Args, Prisma.Args<Type, Operation> & Partial<CacheQueryArgs>>
+) => Promise<Prisma.Result<Type, Omit<Args, 'cache'>, Operation>>;
 
 /**
  * Supported operations for caching.

@@ -21,10 +21,10 @@ export function cache(opts: CacheOptions) {
 		 * @param operation The operation to perform
 		 * @returns The base result.
 		 */
-		const callBaseMethod = async <Type, Operation extends SupportedOperation>(
+		const callBaseMethod = async <Type, Operation extends SupportedOperation, Args>(
 			model: string,
 			operation: Operation,
-			args: Prisma.Args<Type, Operation> | undefined
+			args?: Prisma.Exact<Args, Prisma.Args<Type, Operation>>
 		) => {
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
 			return (client[model as any] as any)[operation](args) as Prisma.Result<
@@ -39,15 +39,14 @@ export function cache(opts: CacheOptions) {
 		 * @param operation The operation to perform
 		 * @returns The overwritten method.
 		 */
-		const overrideMethod = <
-			Type,
-			Operation extends SupportedOperation,
-			Args extends Prisma.Args<Type, Operation> & CacheQueryArgs
-		>(
+		const overrideMethod = <Type, Operation extends SupportedOperation, Args>(
 			operation: Operation
 		): ClientMethodWithCache<Type, Operation, Args> => {
-			return async function (this: Type, args?: Args) {
-				type BaseResult = Prisma.Result<Type, Args, Operation>;
+			return async function (
+				this: Type,
+				args?: Prisma.Exact<Args, Prisma.Args<Type, Operation> & Partial<CacheQueryArgs>>
+			) {
+				type BaseResult = Prisma.Result<Type, Omit<Args, 'cache'>, Operation>;
 				type CachedResult = { result: BaseResult } & CacheMetadata;
 
 				const context = Prisma.getExtensionContext(this);
@@ -57,15 +56,18 @@ export function cache(opts: CacheOptions) {
 					throw new Error('context.$name is undefined');
 				}
 
-				args ??= {} as Required<Args>;
+				let queryCacheArgs: CacheConfig | undefined = undefined;
+
+				if (typeof args === 'object' && args !== null && !Array.isArray(args)) {
+					// If we don't do this TypeScript complains about wrong types
+					// Maybe there is a better way.
+					const _args = args as Record<string, unknown>;
+					queryCacheArgs = (_args.cache as CacheConfig) ?? {};
+					delete _args.cache;
+				}
 
 				const cacheConfig =
-					(args?.cache as CacheConfig) ??
-					opts.models?.[model] ??
-					opts.default ??
-					DefaultCacheConfig;
-
-				delete args.cache;
+					queryCacheArgs ?? opts.models?.[model] ?? opts.default ?? DefaultCacheConfig;
 
 				if (cacheConfig.get) {
 					const cached = await db.get<CachedResult>({ model, operation, args });
@@ -83,7 +85,7 @@ export function cache(opts: CacheOptions) {
 					}
 				}
 
-				const base = await callBaseMethod<Type, Operation>(model, operation, args);
+				const base = await callBaseMethod<Type, Operation, Args>(model, operation, args);
 
 				if (cacheConfig.set) {
 					const cached_at = Date.now();
@@ -101,55 +103,49 @@ export function cache(opts: CacheOptions) {
 			name: 'prisma-cache',
 			model: {
 				$allModels: {
-					async findUnique<T, A extends Prisma.Args<T, 'findUnique'> & Partial<CacheQueryArgs>>(
+					async findUnique<T, A>(
 						this: T,
 						args?: Prisma.Exact<A, Prisma.Args<T, 'findUnique'> & Partial<CacheQueryArgs>>
 					) {
 						return overrideMethod<T, 'findUnique', A>('findUnique').call(this, args);
 					},
-					async findUniqueOrThrow<
-						T,
-						A extends Prisma.Args<T, 'findUnique'> & Partial<CacheQueryArgs>
-					>(
+					async findUniqueOrThrow<T, A>(
 						this: T,
 						args?: Prisma.Exact<A, Prisma.Args<T, 'findUniqueOrThrow'> & Partial<CacheQueryArgs>>
 					) {
 						return overrideMethod<T, 'findUniqueOrThrow', A>('findUniqueOrThrow').call(this, args);
 					},
-					async findFirst<T, A extends Prisma.Args<T, 'findFirst'> & Partial<CacheQueryArgs>>(
+					async findFirst<T, A>(
 						this: T,
 						args?: Prisma.Exact<A, Prisma.Args<T, 'findFirst'> & Partial<CacheQueryArgs>>
 					) {
 						return overrideMethod<T, 'findFirst', A>('findFirst').call(this, args);
 					},
-					async findFirstOrThrow<
-						T,
-						A extends Prisma.Args<T, 'findFirst'> & Partial<CacheQueryArgs>
-					>(
+					async findFirstOrThrow<T, A>(
 						this: T,
 						args?: Prisma.Exact<A, Prisma.Args<T, 'findFirstOrThrow'> & Partial<CacheQueryArgs>>
 					) {
 						return overrideMethod<T, 'findFirstOrThrow', A>('findFirstOrThrow').call(this, args);
 					},
-					async findMany<T, A extends Prisma.Args<T, 'findMany'> & Partial<CacheQueryArgs>>(
+					async findMany<T, A>(
 						this: T,
 						args?: Prisma.Exact<A, Prisma.Args<T, 'findMany'> & Partial<CacheQueryArgs>>
 					) {
 						return overrideMethod<T, 'findMany', A>('findMany').call(this, args);
 					},
-					async count<T, A extends Prisma.Args<T, 'count'> & Partial<CacheQueryArgs>>(
+					async count<T, A>(
 						this: T,
 						args?: Prisma.Exact<A, Prisma.Args<T, 'count'> & Partial<CacheQueryArgs>>
 					) {
 						return overrideMethod<T, 'count', A>('count').call(this, args);
 					},
-					async aggregate<T, A extends Prisma.Args<T, 'aggregate'> & Partial<CacheQueryArgs>>(
+					async aggregate<T, A>(
 						this: T,
 						args?: Prisma.Exact<A, Prisma.Args<T, 'aggregate'> & Partial<CacheQueryArgs>>
 					) {
 						return overrideMethod<T, 'aggregate', A>('aggregate').call(this, args);
 					},
-					async groupBy<T, A extends Prisma.Args<T, 'groupBy'> & Partial<CacheQueryArgs>>(
+					async groupBy<T, A>(
 						this: T,
 						args?: Prisma.Exact<A, Prisma.Args<T, 'groupBy'> & Partial<CacheQueryArgs>>
 					) {
