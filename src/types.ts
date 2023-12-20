@@ -60,19 +60,9 @@ export const DefaultCacheConfig: CacheConfig = {
 	get: false
 };
 
-export type ArgsWithCache<Type, Operation extends SupportedOperation> = Prisma.Args<
-	Type,
-	Operation
-> &
-	Partial<CacheQueryArgs>;
-
-export type ClientMethodWithCache<
-	Type,
-	Operation extends SupportedOperation,
-	Args extends Prisma.Exact<Type, Prisma.Args<Type, Operation>>
-> = (
+export type ClientMethodWithCache<Type, Operation extends SupportedOperation, Args> = (
 	this: Type,
-	args?: ArgsWithCache<Type, Operation>
+	args?: Prisma.Exact<Args, Prisma.Args<Type, Operation> & CacheQueryArgs>
 ) => Promise<Prisma.Result<Type, Args, Operation>>;
 
 /**
