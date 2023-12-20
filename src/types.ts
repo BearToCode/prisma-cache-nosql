@@ -69,8 +69,11 @@ export type ArgsWithCache<Type, Operation extends SupportedOperation> = Prisma.A
 export type ClientMethodWithCache<
 	Type,
 	Operation extends SupportedOperation,
-	Args extends ArgsWithCache<Type, Operation>
-> = (this: Type, args?: Args) => Promise<Prisma.Result<Type, Operation, Args>>;
+	Args extends Prisma.Exact<Type, Prisma.Args<Type, Operation>>
+> = (
+	this: Type,
+	args?: ArgsWithCache<Type, Operation>
+) => Promise<Prisma.Result<Type, Args, Operation>>;
 
 /**
  * Supported operations for caching.

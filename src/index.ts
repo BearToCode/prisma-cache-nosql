@@ -93,7 +93,7 @@ export function cache(opts: CacheOptions) {
 					await db.set({ model, operation, args }, pack);
 				}
 
-				return base;
+				return base as BaseResult;
 			};
 		};
 
