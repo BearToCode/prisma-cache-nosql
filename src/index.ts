@@ -62,7 +62,7 @@ export function cache(opts: CacheOptions) {
 					// If we don't do this TypeScript complains about wrong types
 					// Maybe there is a better way.
 					const _args = args as Record<string, unknown>;
-					queryCacheArgs = (_args.cache as CacheConfig) ?? {};
+					queryCacheArgs = (_args.cache as CacheConfig) ?? undefined;
 					delete _args.cache;
 				}
 
