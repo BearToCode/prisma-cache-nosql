@@ -3,7 +3,7 @@
 	"version": "0.0.0-development",
 	"description": "",
 	"type": "module",
-	"main": "./dist/src/index.js",
+	"main": "./dist/index.js",
 	"scripts": {
 		"test:generate-client": "prisma generate --schema ./tests/prisma/schema.prisma",
 		"test:push-schema": "prisma db push --schema ./tests/prisma/schema.prisma",
@@ -17,8 +17,9 @@
 	},
 	"exports": {
 		".": {
-			"import": "./dist/src/index.js",
-			"require": "./dist/src/index.js"
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.js"
 		}
 	},
 	"files": [
