@@ -6,11 +6,11 @@ export function adapterAceBase(acebase: AceBase): Adapter {
 	return ({ logger }) => ({
 		async get({ model, operation, args }) {
 			const queryHash = hash({ operation, args });
-			logger.module('acebase').log(`Get hash ${queryHash}`);
+			logger.module('acebase').debug(`Get hash ${queryHash}`);
 
 			const snapshot = await acebase.ref(`cache/${model}/${queryHash}`).get();
 			if (snapshot.exists()) {
-				logger.module('acebase').log(`Found snapshot:`, snapshot.val());
+				logger.module('acebase').debug(`Found snapshot:`, snapshot.val());
 				const value = snapshot.val();
 				// If null was provided Acebase does not save it at all
 				if (value.result === undefined) {
@@ -22,7 +22,7 @@ export function adapterAceBase(acebase: AceBase): Adapter {
 		},
 		async set({ model, operation, args }, value) {
 			const queryHash = hash({ operation, args });
-			logger.module('acebase').log(`Set hash ${queryHash}`);
+			logger.module('acebase').debug(`Set hash ${queryHash}`);
 			await acebase.ref(`cache/${model}/${queryHash}`).set(value);
 		},
 		async clear(model) {

@@ -1,7 +1,8 @@
 import chalk, { ChalkInstance } from 'chalk';
 
-export type LogLevel = 'log' | 'warn' | 'error';
+export type LogLevel = 'debug' | 'log' | 'warn' | 'error';
 
+const Purple = chalk.hex('#9900EF');
 const Gray = chalk.hex('#333333');
 const Green = chalk.hex('#57F2A5');
 const Red = chalk.hex('#F93131');
@@ -19,11 +20,26 @@ export class Logger {
 	}
 
 	/**
+	 * Log a debug message to stdout
+	 * @param args The arguments to log
+	 */
+	public debug(...args: unknown[]): void {
+		if (this.logLevel === 'debug') {
+			this.write({
+				type: 'debug',
+				color: Purple,
+				args,
+				method: console.debug
+			});
+		}
+	}
+
+	/**
 	 * Log a message to stdout
 	 * @param message The message to log
 	 */
 	public log(...args: unknown[]): void {
-		if (this.logLevel === 'log') {
+		if (this.logLevel === 'debug' || this.logLevel === 'log') {
 			this.write({
 				type: 'log',
 				color: Green,
@@ -38,7 +54,7 @@ export class Logger {
 	 * @param message The message to log
 	 */
 	public warn(...args: unknown[]): void {
-		if (this.logLevel === 'log' || this.logLevel === 'warn') {
+		if (this.logLevel === 'debug' || this.logLevel === 'log' || this.logLevel === 'warn') {
 			this.write({
 				type: 'warn',
 				color: Orange,
@@ -53,7 +69,12 @@ export class Logger {
 	 * @param message The message to log
 	 */
 	public error(...args: unknown[]): void {
-		if (this.logLevel === 'log' || this.logLevel === 'warn' || this.logLevel === 'error') {
+		if (
+			this.logLevel === 'debug' ||
+			this.logLevel === 'log' ||
+			this.logLevel === 'warn' ||
+			this.logLevel === 'error'
+		) {
 			this.write({
 				type: 'error',
 				color: Red,

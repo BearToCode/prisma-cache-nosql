@@ -68,6 +68,7 @@ export function cache(opts: CacheOptions) {
 
 				const cacheConfig =
 					queryCacheArgs ?? opts.models?.[model] ?? opts.default ?? DefaultCacheConfig;
+				logger.debug(`Cache config for model ${model} with operation ${operation}: `, cacheConfig);
 
 				if (cacheConfig.get) {
 					const cached = await db.get<CachedResult>({ model, operation, args });
@@ -77,8 +78,11 @@ export function cache(opts: CacheOptions) {
 						(cacheConfig.get === true ||
 							cached._cache.cached_at + cacheConfig.get.max > Date.now());
 					if (useCache) {
-						logger.log(
-							`Found cached value with age ${cached._cache.cached_at.toFixed(0)}ms: `,
+						logger.log(`Found cached value for model ${model} with operation ${operation}`);
+						logger.debug(
+							`Found cached value with age ${(
+								new Date().getTime() - cached._cache.cached_at
+							).toFixed(0)}ms: `,
 							cached
 						);
 						return cached.result;
@@ -91,7 +95,8 @@ export function cache(opts: CacheOptions) {
 					const cached_at = Date.now();
 					const expires_at = cacheConfig.set === true ? false : cached_at + cacheConfig.set.ttl;
 					const pack = { result: base, _cache: { cached_at, expires_at } };
-					logger.log(`Set cache: `, pack);
+					logger.log(`Set cache for model ${model} with operation ${operation}`);
+					logger.debug(`Set cache: `, pack);
 					await db.set({ model, operation, args }, pack);
 				}
 

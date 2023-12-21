@@ -8,10 +8,10 @@ export function adapterMemory(): Adapter {
 			const queryHash = hash({ operation, args });
 			const key = `${model}:${queryHash}`;
 
-			logger.module('memory').log(`Get key ${key}`);
+			logger.module('memory').debug(`Get key ${key}`);
 			const value = storage.get(key);
 			if (value) {
-				logger.module('memory').log(`Found value:`, value);
+				logger.module('memory').debug(`Found value:`, value);
 				return JSON.parse(value);
 			}
 			return null;
@@ -20,7 +20,7 @@ export function adapterMemory(): Adapter {
 			const queryHash = hash({ operation, args });
 			const key = `${model}:${queryHash}`;
 
-			logger.module('memory').log(`Set key ${key}`);
+			logger.module('memory').debug(`Set key ${key}`);
 			storage.set(key, JSON.stringify(value));
 		},
 		async clear(model) {
