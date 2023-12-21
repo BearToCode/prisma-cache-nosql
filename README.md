@@ -159,7 +159,7 @@ The following methods can be used with cache:
 ### `cache(opts)`
 
 - `adapter`: the storage adapter to use.
-- `logLevel`: determines the messages logged. Can be `log`, `warn`, `error`.
+- `logLevel`: determines the messages logged. Can be `debug`, `log`, `warn`, `error`.
 - `default`: default cache configuration.
 - `models`: models specific cache configuration.
 
